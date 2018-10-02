@@ -1,22 +1,28 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity} from 'react-native'
+import config from './config';
 
 class InstaClone extends Component {
 
     constructor() {
         super() 
         this.state ={ 
+            liked: false,
             screenWidth: Dimensions.get("window").width }
     }
 
+    likedToggle() {
+        this.setState({
+            liked: !this.state.liked
+        })
+    }
     
 
 
     render() {
         const imageHeight = Math.floor(this.state.screenWidth * 1.1)
-        const imageUri = "https://lh3.googleusercontent.com/yrYFTBh_KMfU54Le5ltfw4b4-FQ8MbFM3RZb_1jgsfJ2NAysXalvH4KKZHxuLPpbHY0CrC5Q4AIt5dqztIflCo8LaQ" + 
-        "=s" + imageHeight + "-c"
-        
+        const imageUri = "http://books.google.com/books/content?id=PCDengEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" + "=s" + imageHeight + "-c";
+        const heartIconolor = this.state.liked ? "rgb(252,62,57)" : null;
         
         return <View style={{ flex: 1, width: 100 + "%", height: 100 + "%" }}>
             <View style={styles.tempNav}>
@@ -24,25 +30,35 @@ class InstaClone extends Component {
             </View>
             <View style={styles.userBar}>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Image stylestyle={styles.userPic} source={{ uri: "https://lh3.googleusercontent.com/I1YGthSMfOEpCB6VqtGEWzTAmrybMs3RJaJQuWdv23ReWKDYpLnM_9PR8E7pfGgrlcjwYm2WcvpSSH_2dDOSnIe0Kg" }} />
+                <Image stylestyle={styles.userPic} source={{ uri: "http://books.google.com/books/content?id=PCDengEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api" }} />
                 <Text style={{ marginLeft: 10 }}>NeoKun</Text>
               </View>
-              <View style={{alignItems: "center"}} >
-                  <Text style={{ fontSize: 30}}>...</Text>
+              <View style={{ alignItems: "center" }}>
+                <Text style={{ fontSize: 30 }}>...</Text>
               </View>
             </View>
 
             {/* my remote pic format from turbo360 storage cannot be rendered at the moment */}
-
-            <Image 
-                style={{ width: this.state.screenWidth, height: 375 
-                }}
-                source={{ 
-                    uri: imageUri 
-                }} 
-                />
+            <TouchableOpacity 
+                activeOpacity = {0.3}
+                onPress={() => {
+                    this.likedToggle()
+            }}>
+            <Image style={{ width: this.state.screenWidth, height: 375 }} source={{ uri: imageUri }} />
+            </TouchableOpacity>
+            <View style={styles.iconBar}>
+                <Image style= {[styles.icon, {height: 40, width: 40}, {tintColor: heartIconolor}]}source={config.images.heartIcon} />
+                <Image style={[styles.icon, { height: 40, width: 40 }]} source={config.images.bubbleIcon} />
+                <Image resizeMode="stretch" style={[styles.icon, { height: 40, width: 40 }]} source={config.images.arrowIcon} />            
+            </View>
+            <View style={styles.iconBar}>
+                <Image style={[styles.icon, { height: 20, width: 20 },]} source={config.images.heartIcon} />
+                <Text>126 likes </Text>
+            </View>
           </View>;
                         }
+            
+
 
          
             
@@ -58,21 +74,35 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     justifyContent: "center",
     alignItems: "center"
-
   },
 
   userBar: {
-      width: 100 + "%",
-      height: 50,
-      backgroundColor: "rgb(255,255,255)",
-      flexDirection: "row",
-      paddingHorizontal: 10,
-      justifyContent: "space-between"  },
+    width: 100 + "%",
+    height: config.styleConstants.rowHeight,
+    backgroundColor: "rgb(255,255,255)",
+    flexDirection: "row",
+    paddingHorizontal: 10,
+    justifyContent: "space-between"
+  },
 
   userPic: {
-      height: 40,
-      width: 40,
-      borderRadius: 20
+    height: 40,
+    width: 40,
+    borderRadius: 20
+  },
+
+  iconBar: {
+    height: config.styleConstants.rowHeight,
+    width: 100 + "%",
+    borderColor: "rgb(233,33,233)",
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    flexDirection: "row",
+    alignItems:"center"
+  },
+  icon: {
+   marginLeft: 5
+
   }
 });
 
