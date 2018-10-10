@@ -2,17 +2,20 @@ import React, { Component } from 'react'
 import { 
     View, 
     Text, 
-    StyleSheet, 
-    Image, 
-    Dimensions,
-    TouchableOpacity
+    
 } from 'react-native'
-import {MainFeed} from './components/screens'
+import {SwitchNavigator, TabNavigator} from 'react-navigation'
+import {MainFeed, Login} from './components/screens'
+
+const MainStack = SwitchNavigator({
+  main: MainFeed,
+  login: Login
+})
 
 class InstaClone extends Component {
   render() {
     return (
-      <MainFeed />
+      <MainStack />
     )
   }
 }
