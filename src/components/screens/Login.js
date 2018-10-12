@@ -24,7 +24,7 @@ class Login extends Component {
                }
                 }
                     >
-                <Text>LOGIN PAGE</Text>
+                <Text>New User</Text>
             </TouchableOpacity>
             
         )
