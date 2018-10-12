@@ -8,8 +8,8 @@ import {SwitchNavigator, TabNavigator} from 'react-navigation'
 import {MainFeed, Login} from './components/screens'
 
 const MainStack = SwitchNavigator({
+  login: Login,
   main: MainFeed,
-  login: Login
 })
 
 class InstaClone extends Component {
