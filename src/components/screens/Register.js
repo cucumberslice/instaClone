@@ -3,11 +3,31 @@ import { View, Text, TouchableOpacity, StyleSheet, TextInput,Button } from 'reac
 
 class Register extends Component {
 
-    login() {
+    constructor() {
+        super();
+        this.state = {
+            crendentials: {
+                login: '',
+                password: ''
+            }
+        }
+
+    }
+
+    updateText(text,field) {
+        let newCredentials = Object.assign(this.state.crendentials);
+        newCredentials[field] = text;
+        this.setState({
+            crendentials: newCredentials
+        })
+    }
+
+    register() {
         //navigate to the main app
         //send credentials to server
         //if 
-        this.props.navigation.navigate('main')
+        alert(JSON.stringify(this.state.crendentials))
+        // this.props.navigation.navigate('main')
 
     }
     render() {
@@ -25,8 +45,14 @@ class Register extends Component {
             >
                 <Text>REGISTER PAGE</Text>
            
-                <TextInput placeholder="Username"style={styles.input} /> 
-                <TextInput placeholder="Password"style={styles.input}/>
+                <TextInput 
+                value={this.state.login}
+                autoCorrect={false}
+                placeholder="Username" style={styles.input} onChange={text => this.updateText(text, 'login')}/> 
+                <TextInput 
+                value={this.state.password}
+                autoCorrect={false}
+                onChange={text=>this.updateText(text, 'password')} secureTextEntry  placeholder="Password"style={styles.input}/>
             <Button onPress={()=> {
                 this.register()
 
